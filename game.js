@@ -162,8 +162,7 @@ function finishShot(didHit) {
 function lancer() {
     let a = parseFloat(document.getElementById("a").value)
     let b = parseFloat(document.getElementById("b").value)
-    let c = parseFloat(document.getElementById("c").value) || 0
-
+    let c = 0
     if (isNaN(a) || isNaN(b)) {
         document.getElementById("divAffiche").innerText = "Entrez des valeurs pour a et b!"
         return
@@ -175,7 +174,7 @@ function lancer() {
     document.getElementById("divAffiche").innerText = ""
     function step() {
         var worldX = playerX + t
-        var worldY = playerY + (a*t*t + b*t + c)
+        var worldY = playerY + (a*t*t + b*t)
         var pos= griToPix(worldX, worldY)
         path.push(pos)
         drawScene()

@@ -62,8 +62,39 @@ input, textarea {
   justify-content: center;
 }
 .gradient {
-  font: linear-gradient(45deg, #0066ff, #ff32d6);
-  border-width: 3px;
+  background-color: white;
+  position: relative;
+  margin:10px;
+  height: 50px;
+  width: 100px;
+  border-radius: 100px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition : all 0.5s ease-in-out;
+  
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.gradient::after{
+  content: '';
+  position: absolute;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  background:linear-gradient(to bottom right, red 0% 35%, black 100%);
+  z-index: -1;
+
+}
+.gradient:hover{
+  color: white;
+
+  z-index: 0;
 }
 .homepage {
   font-size : 50px;

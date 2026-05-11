@@ -1,4 +1,4 @@
-body{
+.body{
   margin:0;
   background-color:linear-gradient(90deg,rgb(228, 57, 44) 0% 50%, black 100%);
   color:white;

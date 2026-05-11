@@ -61,6 +61,87 @@ function genereParabole() {
     }
     ctx.stroke()
 }
+//https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Advanced_animations
+//https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+//https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations
+//https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations
+function drawScene(){
+       ctx.fillStyle = "#000"
+    ctx.fillRect(0, 0, canWid, canHei)
+    ctx.strokeStyle = "rgba(255,255,255,0.1)"
+    ctx.lineWidth = 1
+ for (let j = 0; j <= griCol; j++) {
+        ctx.beginPath()
+        ctx.moveTo(j * celWid, 0)
+        ctx.lineTo(j * celHei, canHei)
+        ctx.stroke()
+    }
+    for (let i = 0; i <= gridRow; i++) {
+        ctx.beginPath()
+        ctx.moveTo(0, i * celHei)
+        ctx.lineTo(canWid, i * celHei)
+        ctx.stroke()
+    }
+function drawTrail(path, currentPos) {
+    if (path.length < 2) return
+    ctx.beginPath()
+    ctx.strokeStyle = "rgba(100, 180, 255, 0.9)"
+    ctx.lineWidth = 2
+    ctx.moveTo(path[0].px, path[0].py)
+    for (let i = 1; i < path.length; i++) {
+        ctx.lineTo(path[i].px, path[i].py)
+    }
+        ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(currentPos.px, currentPos.py, 5, 0, Math.PI * 2)
+    ctx.fillStyle = "#fff"
+    ctx.fill()
+}
+    let t = 0
+    let path = []
+    let tire = false
+    if (tire == false){return}
+    
+    let a = parseFloat(document.getElementById("a").value)
+    let b = parseFloat(document.getElementById("b").value)
+    let c = parseFloat(document.getElementById("c").value)
+
+    if (isNaN(a) || isNaN(b)|| isNaN(c)){
+        t=0
+        path=[]
+        tire = true
+    function step(){
+        let worldX = randomPositionPlayerX + t
+        let worldY = randomPositionPlayerY + (a*t*t + b*t)
+        let pos = griToPix(worldX,worldY)
+        path.push(pos)
+        drawScene()
+        drawTrail(path)
+        drawDot(pos)
+        finishShot()
+        t += 0.05;
+        requestAhimationFrame(step);
+        }
+        step();
+    }
+    function isNearEnemy(px, py) {
+    var e = gridToPixel(randomPositionEnemyX, randomPositionEnemyY);
+    var dx = px - e.px;
+    var dy = py - e.py;
+    return 
+    Math.sqrt(dx*dx + dy*dy) < 14; 
+}
+function finishShot(hit, hitPx, hitPy) {
+    isShooting = false
+    if (hit) {
+        document.getElementById("divAffiche").innerText = "HIT!"
+        drawScene()
+        ctx.beginPath()
+    } else {
+        document.getElementById("divAffiche").innerText = "Miss"
+        drawScene()
+    }
+}
 
 
 

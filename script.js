@@ -117,6 +117,17 @@ function goToGame(){
 }
 startIntro();
 
+document.getElementById('play-btn').addEventListener('click', function(event) {
+    const username = document.getElementById('username-input').value.trim();
+    
+    if (username === "") {
+        event.preventDefault(); 
+        alert("S'il vous plaît, entrez un nom d'utilisateur !");
+        return;
+    }
+    
+    localStorage.setItem('mathAttaqueUser', username);
+});
 
 
 

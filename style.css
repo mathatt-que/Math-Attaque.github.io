@@ -6,7 +6,7 @@ body{
   font-family: 'Rajdhani', sans-serif;
   overflow: hidden;
 }
-  //youtube.com/watch?v=mtn0DkRaoHI&t=7
+  /*youtube.com/watch?v=mtn0DkRaoHI&t=7*/
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap');
 .home-bg {
     position: absolute;
@@ -30,14 +30,14 @@ body{
     justify-content: center;
 }
  
-//https://www.youtube.com/watch?v=im_uQNk50PY
+/*https://www.youtube.com/watch?v=im_uQNk50PY*/
 .logo{
     font: 500 clamp(52px, 9vw, 100px) 'Bebas Neue', sans-serif;
   letter-spacing: 5px;
   margin-bottom: 6px;
 }
 .logo .star { color: #e02020; }
- //https://stackoverflow.com/questions/4151743/how-can-i-change-the-thickness-of-my-hr-tag
+ /*https://stackoverflow.com/questions/4151743/how-can-i-change-the-thickness-of-my-hr-tag*/
 .logo-underline {
     width: min(480px, 72vw);
     height: 2px;
@@ -45,7 +45,7 @@ body{
     margin-bottom: 40px;
 }
  
-//https://www.youtube.com/watch?v=RFGiYHPKWgg
+/*https://www.youtube.com/watch?v=RFGiYHPKWgg*/
 .username-row {
     display: flex;
     align-items: center;
@@ -85,7 +85,7 @@ canvas{
   margin:auto;
 }
 .abc {
-  /*https://www.geeksforgeeks.org/html/how-to-remove-focus-border-outline-around-text-input-boxes/*/
+  /*https://www.geeksforgeeks.org/html/how-to-remove-focus-border-outline-around-text-input-boxes*/
   background-color: red;
   color: black;
   height: 30px;
@@ -159,5 +159,7 @@ a{
     font-size: 20px;
     letter-spacing: 3px;
     color: #000;
+}
+  
     text-decoration: none;
 }

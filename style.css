@@ -29,12 +29,6 @@ body{
 }
  
 //https://www.youtube.com/watch?v=im_uQNk50PY
-.logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(52px, 9vw, 100px);
-    letter-spacing: 5px;
-    margin-bottom: 6px;
-}
 .logo .star { color: #e02020; }
  
 .logo-underline {

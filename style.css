@@ -93,7 +93,9 @@ a{
 .gradient:hover{
   color: white;
   z-index: 0;
-}
-.logo{
-  
+.username-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
 }

@@ -31,12 +31,17 @@ body{
 }
  
 //https://www.youtube.com/watch?v=im_uQNk50PY
+.logo{
+    font: 500 clamp(52px, 9vw, 100px) 'Bebas Neue', sans-serif;
+  letter-spacing: 5px;
+  margin-bottom: 6px;
+}
 .logo .star { color: #e02020; }
  //https://stackoverflow.com/questions/4151743/how-can-i-change-the-thickness-of-my-hr-tag
 .logo-underline {
     width: min(480px, 72vw);
     height: 2px;
-    background: #fff;
+    background: #ffffff;
     margin-bottom: 40px;
 }
  

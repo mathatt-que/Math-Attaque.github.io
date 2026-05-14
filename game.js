@@ -54,52 +54,59 @@ function genereParabole() {
     ctx.stroke()
 }*/
 // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_usage
-const canvas= document.getElementById("myCanvas")
-const ctx= canvas.getContext("2d")
-const largeure = canvas.width
-const hauteure = canvas.height
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const canvas = document.getElementById("myCanvas")
+const ctx = canvas.getContext("2d")
+
+const largeure = window.innerWidth
+const hauteure = window.innerHeight
+canvas.style.position = "fixed"
+canvas.style.top= "0"
+canvas.style.left="0"
+canvas.style.zIndex= "0"
+canvas.width = largeure
+canvas.height = hauteure
+
 function randomPositionPlayerX(minX, maxX) {
-    minX = Math.ceil(minX)
-    maxX = Math.floor(maxX)
+    minX = Math.ceil(minX); maxX = Math.floor(maxX)
     return Math.floor(Math.random() * (maxX - minX + 1)) + minX
 }
 function randomPositionPlayerY(minY, maxY) {
-    minY = Math.ceil(minY)
-    maxY = Math.floor(maxY)
+    minY = Math.ceil(minY); maxY = Math.floor(maxY)
     return Math.floor(Math.random() * (maxY - minY + 1)) + minY
 }
 function randomPositionEnemyX(minX, maxX) {
-    minX = Math.ceil(minX)
-    maxX = Math.floor(maxX)
+    minX = Math.ceil(minX); maxX = Math.floor(maxX)
     return Math.floor(Math.random() * (maxX - minX + 1)) + minX
 }
 function randomPositionEnemyY(minY, maxY) {
-    minY = Math.ceil(minY)
-    maxY = Math.floor(maxY)
+    minY = Math.ceil(minY); maxY = Math.floor(maxY)
     return Math.floor(Math.random() * (maxY - minY + 1)) + minY
 }
+
 var playerX = randomPositionPlayerX(1, 3)
 var playerY = randomPositionPlayerY(2, 6)
-var enemyX  = randomPositionEnemyX(12, 15)
-var enemyY  = randomPositionEnemyY(2, 6)
-const griCol  = 16
+var enemyX = randomPositionEnemyX(12, 15)
+var enemyY = randomPositionEnemyY(2, 6)
+
+const griCol = 16
 const gridRow = 10
-const celWid  = largeure / griCol
-const celHei  = hauteure / gridRow
+const celWid = largeure / griCol
+const celHei = hauteure / gridRow
+
 function griToPix(gx, gy) {
     return {
-px: gx * celWid,
-py: hauteure - gy * celHei
+        px: gx * celWid,
+        py: hauteure - gy * celHei
     }
 }
-let tire = false
-let path = []
-let t    = 0
-// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_usage
+let tire= false
+let path= []
+let highlightPath = []
+let t= 0
 function drawScene() {
-ctx.fillStyle = "#000"
-ctx.fillRect(0, 0, largeure, hauteure)
+    ctx.fillStyle = "#000"
+    ctx.fillRect(0, 0, largeure, hauteure)
+
     ctx.strokeStyle = "rgba(255,255,255,0.1)"
     ctx.lineWidth = 1
     for (let j = 0; j <= griCol; j++) {
@@ -114,6 +121,7 @@ ctx.fillRect(0, 0, largeure, hauteure)
         ctx.lineTo(largeure, i * celHei)
         ctx.stroke()
     }
+
     var player = griToPix(playerX, playerY)
     ctx.beginPath()
     ctx.arc(player.px, player.py, 8, 0, Math.PI * 2)
@@ -125,8 +133,23 @@ ctx.fillRect(0, 0, largeure, hauteure)
     ctx.arc(enemy.px, enemy.py, 8, 0, Math.PI * 2)
     ctx.fillStyle = "#e44"
     ctx.fill()
+
+    drawHighlight()
 }
-// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Advanced_animations
+function drawHighlight() {
+    if (highlightPath.length < 2) return
+    ctx.beginPath()
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"
+    ctx.lineWidth = 2
+    ctx.setLineDash([6, 4])
+    ctx.moveTo(highlightPath[0].px, highlightPath[0].py)
+    for (let i = 1; i < highlightPath.length; i++) {
+        ctx.lineTo(highlightPath[i].px, highlightPath[i].py)
+    }
+    ctx.stroke()
+    ctx.setLineDash([])
+}
+
 function drawTrail(path, currentPos) {
     if (path.length < 2) return
     ctx.beginPath()
@@ -142,34 +165,36 @@ function drawTrail(path, currentPos) {
     ctx.fillStyle = "#fff"
     ctx.fill()
 }
+
 function isNearEnemy(px, py) {
-    var e= griToPix(enemyX, enemyY)
-    var dx= px - e.px
-    var dy= py - e.py
+    var e = griToPix(enemyX, enemyY)
+    var dx = px - e.px
+    var dy = py - e.py
     return Math.sqrt(dx*dx + dy*dy) < 14
 }
+
 function finishShot(didHit) {
     tire = false
     if (didHit) {
-    document.getElementById("divAffiche").innerText = "HIT!"
+        document.getElementById("divAffiche").innerText = "HIT!"
+        highlightPath = []
+        nouvelleparabole()
     } else {
-    document.getElementById("divAffiche").innerText = "Miss"
+        document.getElementById("divAffiche").innerText = "Miss"
+        highlightPath = path.slice()
+        drawScene()
     }
-    drawScene()
 }
-// https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations
+
 function lancer() {
     let a = parseFloat(document.getElementById("a").value)
     let b = parseFloat(document.getElementById("b").value)
-    let c = 0
     if (isNaN(a) || isNaN(b)) {
         document.getElementById("divAffiche").innerText = "Entrez des valeurs pour a et b!"
         return
     }
-    if (tire) { 
-        return
-    }
+    if (tire) return
+
     tire = true
     t= 0
     path = []
@@ -190,24 +215,26 @@ function lancer() {
             return
         }
         t += 0.05
-        // https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
         requestAnimationFrame(step)
     }
     step()
 }
+
 function nouvelleparabole() {
-    playerX = randomPositionPlayerX(1, 3)
-    playerY = randomPositionPlayerY(2, 6)
-    enemyX = randomPositionEnemyX(12, 15)
-    enemyY  = randomPositionEnemyY(2, 6)
-    tire= false
-    path= []
-    t= 0
+    playerX =randomPositionPlayerX(1, 3)
+    playerY=randomPositionPlayerY(2, 6)
+    enemyX=randomPositionEnemyX(12, 15)
+    enemyY=randomPositionEnemyY(2, 6)
+    tire=false
+    path=[]
+    t=0
+    document.getElementById("a").value = ""
+    document.getElementById("b").value = ""
     document.getElementById("divAffiche").innerText = ""
     drawScene()
 }
+
 drawScene()
 
-let username = document.getElementById("txtusername").value
-
-document.getElementById("usernameDisplay").innerText = "Joueur : " + username;
+let username = localStorage.getItem('mathAttaqueUser') || "Joueur"
+document.getElementById("usernameDisplay").innerText = "Joueur : " + username
